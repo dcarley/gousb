@@ -184,9 +184,9 @@ found:
 		}
 	}
 
-	// Detach kernel driver if platform supported
+	// Detach kernel driver if required and platform supported
 	if errno := C.libusb_detach_kernel_driver(d.handle, C.int(iface));
-		errno < 0 && errno != C.LIBUSB_ERROR_NOT_SUPPORTED {
+		errno < 0 && errno != C.LIBUSB_ERROR_NOT_FOUND && errno != C.LIBUSB_ERROR_NOT_SUPPORTED {
 		return nil, fmt.Errorf("usb: detachkrndrv: %s", usbError(errno))
 	}
 
